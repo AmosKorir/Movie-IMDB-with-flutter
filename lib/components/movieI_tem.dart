@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_imdb_trailers/models/movie.dart';
+import 'package:domain/models/movie.dart';
 import 'package:movie_imdb_trailers/movie_details.dart';
 
 // ignore: must_be_immutable
@@ -22,8 +22,13 @@ class _MovieItem extends State<MovieItem> {
     return Container(
       child: Card(
         child: InkWell(
-          onTap: navigateToDetaits(movie),
-          child: Image.network(movie.avatar),
+          onTap: ()=>navigateToDetaits(movie),
+          child: Image.network("https://image.tmdb.org/t/p/w342/"+movie.posterPath,
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+          ),
         ),
       ),
     );

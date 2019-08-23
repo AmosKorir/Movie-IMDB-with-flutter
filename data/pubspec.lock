@@ -29,24 +29,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
-  data:
-    dependency: "direct main"
-    description:
-      path: data
-      relative: true
-    source: path
-    version: "0.0.1"
   domain:
     dependency: "direct main"
     description:
-      path: domain
+      path: "../domain"
       relative: true
     source: path
     version: "0.0.1"
@@ -60,13 +46,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  fluttertoast:
-    dependency: "direct main"
-    description:
-      name: fluttertoast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.11"
   http:
     dependency: "direct main"
     description:
@@ -109,13 +88,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.0"
-  presenters:
-    dependency: "direct main"
-    description:
-      path: presenters
-      relative: true
-    source: path
-    version: "0.0.1"
   quiver:
     dependency: transitive
     description:

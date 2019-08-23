@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_imdb_trailers/models/movie.dart';
+import 'package:domain/models/movie.dart';
 
 class MovieDetails extends StatefulWidget {
   Movie movie;
