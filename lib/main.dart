@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
   }
 
 
-class _MyHomePageState extends State<MyHomePage>  {
+class _MyHomePageState extends State<MyHomePage> implements DrawerOptoin  {
   MoviePresenter moviePresenter;
 
 
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage>  {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MainDrawer(),
+      drawer: MainDrawer(this),
       appBar: AppBar(
 
         title: Text(widget.title),
@@ -60,6 +60,14 @@ class _MyHomePageState extends State<MyHomePage>  {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  @override
+  void drawerOption(int code) {
+   setState(() {
+
+   });
+
   }
 
 }
