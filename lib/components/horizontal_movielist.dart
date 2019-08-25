@@ -1,30 +1,37 @@
-import 'package:domain/models/movie.dart';
+import 'package:domain/Constants.dart';
+import 'package:domain/models/Videos.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:presenters/moviewPresenter.dart';
+import 'package:presenters/VideoPresenter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import 'movieI_tem.dart';
-
+// ignore: must_be_immutable
 class HorizontalMovieList extends StatefulWidget {
-  List<Movie> moview = [];
+  List<Results> moview = [];
+  String movieId;
+
+  HorizontalMovieList(this.movieId);
 
   @override
-  _MovieList createState() => _MovieList(moview);
+  State<StatefulWidget> createState() {
+    return _MovieList(moview, movieId);
+  }
 }
 
 class _MovieList extends State<HorizontalMovieList>
-    implements MoviePresenterView {
-  List<Movie> moview = [];
-  MoviePresenter moviePresenter;
+    implements VideoPresenterView {
+  List<Results> moview = [];
+  String _movieId;
+  VideoPresenter videoPresenter;
 
-  _MovieList(this.moview);
+  _MovieList(this.moview, this._movieId);
 
   @override
   void initState() {
+    videoPresenter = new VideoPresenter();
+    videoPresenter.setView(this);
+    videoPresenter.getVideos(_movieId);
     super.initState();
-    moviePresenter = new MoviePresenter();
-    moviePresenter.setMoviePresenterView(this);
-    moviePresenter.getMovie();
   }
 
   @override
@@ -33,30 +40,20 @@ class _MovieList extends State<HorizontalMovieList>
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: List.generate(moview.length, (index) {
-          return _ovieItem(moview[index]);
+          return _movieItem(moview[index]);
         }),
       ),
     );
   }
 
-  @override
-  error() {
-    // TODO: implement error
-    return null;
-  }
-
-  @override
-  setMovie(List<Movie> movies) {
-    setState(() {
-      moview = movies;
-    });
-  }
-
-  Widget _ovieItem(Movie movie) {
+  Widget _movieItem(Results results) {
     return Card(
       child: InkWell(
+        onTap: () {
+          _launchYoutube(results.key);
+        },
         child: Image.network(
-          "https://image.tmdb.org/t/p/w342/" + movie.posterPath,
+          Constants.YOUTUBE_THUMBNAIL_BASE_URL + results.key + "/hqdefault.jpg",
           fit: BoxFit.cover,
           height: 200,
           width: 200,
@@ -64,5 +61,26 @@ class _MovieList extends State<HorizontalMovieList>
         ),
       ),
     );
+  }
+
+  @override
+  void error(FallThroughError error) {
+    print(error.toString());
+  }
+
+  @override
+  void setVideo(List<Results> results) {
+    setState(() {
+      moview = results;
+    });
+  }
+}
+
+_launchYoutube(String key) async {
+  String url = Constants.YOUTUBE_BASE_URL + key;
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

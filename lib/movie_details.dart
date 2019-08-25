@@ -1,9 +1,10 @@
 import 'package:domain/models/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:domain/Constants.dart';
 
 import 'components/horizontal_movielist.dart';
-import 'components/movieI_tem.dart';
+
 
 class MovieDetails extends StatefulWidget {
   final Movie movie;
@@ -29,28 +30,28 @@ class _MovieDetails extends State<MovieDetails> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.red)
-    );
+        SystemUiOverlayStyle(statusBarColor: Colors.red));
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: Scaffold(
-          body: SingleChildScrollView(
-            child:Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                TopImageTitle(movie),
-                _movieDescription(),
-                SizedBox(
-                  height: 200,
-                  child: HorizontalMovieList(),
-                ),
-              ],
-            ),
-          )
-      )
-    );
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+        ),
+        home: Scaffold(
+            body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TopImageTitle(movie),
+              _movieTitle(),
+              _movieDescription(),
+              _trailerTitle(),
+              SizedBox(
+                height: 200,
+                child: HorizontalMovieList(movie.id.toString()),
+              ),
+            ],
+          ),
+        )));
   }
 
   _movieDescription() {
@@ -65,39 +66,17 @@ class _MovieDetails extends State<MovieDetails> {
     );
   }
 
-  _video() {
-    return Container(
-        margin: const EdgeInsets.all(10.0),
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-        Card(
-              child: InkWell(
-
-                child: Image.network("https://image.tmdb.org/t/p/w342/"+movie.posterPath,
-                  fit: BoxFit.cover,
-                  height: 200,
-                  width:200,
-                  alignment: Alignment.center,
-                ),
-              ),
-
-            ),
-
-            Card(
-              child: InkWell(
-
-                child: Image.network("https://image.tmdb.org/t/p/w342/"+movie.posterPath,
-                  fit: BoxFit.cover,
-                  height: 200,
-                  width:200,
-                  alignment: Alignment.center,
-                ),
-              ),
-
-            ),
-          ],
-        ));
+  _movieTitle() {
+   return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(movie.title,style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold)),
+    );
+  }
+  _trailerTitle(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text("Trailers",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+    );
   }
 }
 //top layout for the movie details
@@ -123,7 +102,7 @@ class TopImageTitle extends StatelessWidget {
         ),
         Container(
           child: Image.network(
-            "https://image.tmdb.org/t/p/w342/" + _movie.backdropPath,
+            Constants.BACKDROP_BASE_URL_780 + _movie.backdropPath,
             width: double.infinity,
           ),
         ),
@@ -131,7 +110,7 @@ class TopImageTitle extends StatelessWidget {
           left: 40,
           top: 150,
           child: Image.network(
-            "https://image.tmdb.org/t/p/w342/" + _movie.posterPath,
+           Constants.POSTER_BASE_URL_342 + _movie.posterPath,
             width: 100,
           ),
         ),
