@@ -59,7 +59,7 @@ class MainDrawer extends StatelessWidget {
               Icons.beenhere,
               color: Colors.black87,
             ),
-            title: Text('Most Rated'),
+            title: Text('Upcoming'),
             onTap: () {
               drawerOptoin.drawerOption(Constants.MOSTRATED);
               Navigator.pop(context);

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:data/repositories/MovieApiRepository.dart';
 import 'package:data/utils/StreamControllerManager.dart';
 import 'package:domain/models/movie.dart';
+import 'package:domain/models/Page.dart';
 
 class MoviePresenter {
   StreamController streamController;
@@ -13,10 +14,10 @@ class MoviePresenter {
     _moviePresenterView = view;
   }
 
-  void getMovie() {
+  void getMovie(int page,String type) {
     streamController =
         StreamControllerManager.initStreamContraller(streamController);
-    Stream<List<Movie>> stream = movieApiRepository.getMovies();
+    Stream<Page> stream = movieApiRepository.getMovies(page,type);
     stream.listen((onData) {
       print("data received");
       _moviePresenterView.setMovie(onData);
@@ -37,7 +38,7 @@ class MoviePresenter {
 }
 
 abstract class MoviePresenterView {
-  setMovie(List<Movie> movies);
+  setMovie(Page page);
 
   error();
 }

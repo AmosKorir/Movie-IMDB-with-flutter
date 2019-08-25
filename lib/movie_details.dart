@@ -26,7 +26,7 @@ class _MovieDetails extends State<MovieDetails> {
         SystemUiOverlayStyle(statusBarColor: Colors.red));
     super.initState();
   }
-
+bool clear=false;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(

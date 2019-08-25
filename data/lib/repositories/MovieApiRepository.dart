@@ -1,10 +1,10 @@
 import 'package:data/api/movie_api.dart';
 import 'package:data/mappers/MovieMapper.dart';
-import 'package:domain/models/movie.dart';
+import 'package:domain/models/Page.dart';
 import 'package:domain/models/Videos.dart';
 class MovieApiRepository {
-  Stream<List<Movie>> getMovies() {
-    return Stream.fromFuture(MovieApi.getMovies())
+  Stream<Page> getMovies(int page,String type) {
+    return Stream.fromFuture(MovieApi.getMovies(page,type))
         .map((r) => MovieMapper.movietransform(r));
   }
 
