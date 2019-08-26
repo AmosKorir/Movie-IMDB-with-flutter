@@ -7,7 +7,6 @@ import 'package:presenters/moviewPresenter.dart';
 import 'components/movieI_tem.dart';
 
 class MovieList extends StatefulWidget {
-  GlobalKey<_MovieList> globalKey=new GlobalKey();
   List<Movie> moview = [];
   String type;
   bool clear = false;
@@ -18,13 +17,13 @@ class MovieList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     
-    return _MovieList(moview,type,clear);
+    return InerMovieList(moview,type,clear);
   }
 
 
 }
 
-class _MovieList extends State<MovieList> implements MoviePresenterView {
+class InerMovieList extends State<MovieList> implements MoviePresenterView {
   List<Movie> moview = [];
   MoviePresenter moviePresenter;
   ScrollController _scrollController = new ScrollController();
@@ -32,7 +31,7 @@ class _MovieList extends State<MovieList> implements MoviePresenterView {
   String type = "";
   bool clear = false;
 
-  _MovieList(this.moview, this.type, this.clear);
+  InerMovieList(this.moview, this.type, this.clear);
 
 
   @override
@@ -108,6 +107,17 @@ class _MovieList extends State<MovieList> implements MoviePresenterView {
         moview.clear();
       }
       moview.addAll(page.movies);
+    });
+  }
+
+  void refresh(String type, bool clear) {
+    if (this.clear) {
+      moview.clear();
+    }
+    setState(() {
+      this.clear=clear;
+      pager = new Page(new Pagination(1, 2), new List());
+      this.type = type;
     });
   }
 }

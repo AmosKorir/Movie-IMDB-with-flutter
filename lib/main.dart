@@ -32,6 +32,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> implements DrawerOptoin {
+  GlobalKey<InerMovieList> globalKey=new GlobalKey();
+
   MoviePresenter moviePresenter;
   String type = "top_rated";
   bool clear = false;
@@ -66,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> implements DrawerOptoin {
       switch (code) {
         case 1:
           type = "popular";
+
           break;
         case 2:
           type = "top_rated";
@@ -77,12 +80,16 @@ class _MyHomePageState extends State<MyHomePage> implements DrawerOptoin {
           break;
         case 5:
           break;
+        case 6:
+          type="latest";
+          break;
       }
+      globalKey.currentState.refresh(type, clear);
     });
   }
 
   _getList() {
-      MovieList movieList= new MovieList(UniqueKey(),type, clear);
+      MovieList movieList= new MovieList(globalKey,type, clear);
       return movieList;
   }
 }
